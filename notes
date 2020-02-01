@@ -1,0 +1,14 @@
+$  yarn add knex
+$  yarn add knex sqlite3
+$  yarn knex init
+$
+
+**set the knexfile.js, in "development"...
+//
+
+$ yarn knex migrate:make cars
+    -> creates migration file (in /data/migrations)
+
+//create seed file(s)
+//set up knexfile.js to route to seeds
+$  yarn knex seed:run
