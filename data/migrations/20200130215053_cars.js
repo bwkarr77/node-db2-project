@@ -1,18 +1,18 @@
-exports.up = function(knex) {
-  return knex.schema.createTable("cars", table => {
-    table.increaments("id");
-    table
+exports.up = function(knex, Promise) {
+  return knex.schema.createTable("cars", tbl => {
+    tbl.increments("id");
+    tbl
       .string("VIN", 17) //String under VIN with 17 characters
-      .notNull() //can't be blank/null
+      .notNullable() //can't be blank/null
       .unique(); //can't repeat
-    table.text("make").notNull();
-    table.text("model").notNull();
-    table.float("mileage").notNull();
-    // table.text("transmission").defaultTo("unknown");
-    // table.text("title").defaultTo("unknown");
+    tbl.text("make", 128).notNullable();
+    tbl.text("model", 128).notNullable();
+    tbl.float("mileage", 128).notNullable();
+    tbl.text("transmission").default("unknown");
+    tbl.text("title").default("unknown");
   });
 };
 
-exports.down = function(knex) {
+exports.down = function(knex, Promise) {
   return knex.schema.dropTableIfExists("cars");
 };

@@ -1,4 +1,5 @@
 const controller = require("../utils/db-config.js");
+const { validAddition } = require("./carsMiddle.jsx");
 console.log("controllers");
 //
 //  KEEPING CONTROLLER METHODS GENERIC TO MAKE IT REUSABLE FOR ALL
@@ -7,13 +8,13 @@ console.log("controllers");
 // ================================
 //            GET, ALL
 // ================================
-// @desc    GET all accounts
-// @route   GET to /api/accounts
+// @desc    GET all cars
+// @route   GET to /api/cars
 exports.getAll = (req, res, next) => {
-  const { limit, sortby, sortdir } = req.query;
-  console.log("getAll", req.query, limit, sortby, sortdir);
-  controller
-    .find()
+  // const { limit, sortby, sortdir } = req.query;
+  console.log("getAll", req.params);
+  controller("cars")
+    // .find()
     // .limit(limit)
     // .orderBy(sortby, sortdir) //orders the returns in ascending order
     .then(allReturns => {
@@ -22,6 +23,7 @@ exports.getAll = (req, res, next) => {
         .json(allReturns);
     })
     .catch(e => {
+      console.log("getAll error: ", e);
       res
         .status(500) //server error
         .json({ error: "error in getAllIndividual" });
@@ -30,11 +32,11 @@ exports.getAll = (req, res, next) => {
 // ================================
 //            GET, ID
 // ================================
-// @desc    GET account with :id
-// @route   GET to /api/accounts/:id
+// @desc    GET cars with :id
+// @route   GET to /api/cars/:id
 exports.getIndividual = (req, res, next) => {
   console.log("getIndividual");
-  controller("accounts")
+  controller("cars")
     // .get()
     .where({ id: req.params.id })
     .first()
@@ -58,22 +60,22 @@ exports.getIndividual = (req, res, next) => {
 // ================================
 //            POST
 // ================================
-// @desc    POST/CREATE new account
-// @route   POST to /api/accounts
+// @desc    POST/CREATE new car
+// @route   POST to /api/cars
 exports.createNew = (req, res, next) => {
-  if (validAccount(req.body)) {
+  if (validAddition(req.body)) {
     console.log("addNew: ", req.body);
-    controller("accounts")
+    controller("cars")
       .insert(req.body, "id")
       .then(([id]) => id)
       .then(id => {
-        controller("accounts")
+        controller("cars")
           .where({ id })
           .first()
-          .then(account => {
+          .then(cars => {
             res
               .status(201) //success
-              .json(account);
+              .json(cars);
           });
       })
       .catch(e => {
@@ -91,11 +93,11 @@ exports.createNew = (req, res, next) => {
 // ================================
 //            DELETE
 // ================================
-// @desc    DELETE account with :id
-// @route   DELETE to /api/account/:id
+// @desc    DELETE car with :id
+// @route   DELETE to /api/cars/:id
 exports.deleteIndividual = (req, res, next) => {
   console.log("deleteIndividual: ", req.body);
-  controller("accounts")
+  controller("cars")
     .where({ id: req.params.id })
     .del()
     .then(unit => {
@@ -114,11 +116,11 @@ exports.deleteIndividual = (req, res, next) => {
 // ================================
 //            PUT
 // ================================
-// @desc    UPDATE account with :id
-// @route   PUT to /api/account/:id
+// @desc    UPDATE cars with :id
+// @route   PUT to /api/cars/:id
 exports.updateIndividual = (req, res, next) => {
   console.log("updateIndividual: ", req.body);
-  controller("accounts")
+  controller("cars")
     .where({ id: req.params.id })
     .update(req.body)
     .then(unit => {

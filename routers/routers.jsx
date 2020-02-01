@@ -1,6 +1,5 @@
 const router = require("express").Router();
 
-const db = require("../utils/db-config.js");
 const {
   getAll,
   createNew,

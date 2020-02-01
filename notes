@@ -12,3 +12,15 @@ $ yarn knex migrate:make cars
 //create seed file(s)
 //set up knexfile.js to route to seeds
 $  yarn knex seed:run
+
+
+//========IF RUNNING INTO ISSUES WITH CREATING TABLE:========
+
+- delete all .db3 files
+$ yarn knex migrate:rollback
+$ yarn knex migrate:latest
+
+** this will create new .db3 files
+
++ enpoints works
++ $yarn knex seed:run works
