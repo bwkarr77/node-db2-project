@@ -1,0 +1,31 @@
+$  yarn add knex
+$  yarn add knex sqlite3
+$  yarn knex init
+$
+
+**set the knexfile.js, in "development"...
+//
+
+$ yarn knex migrate:make cars
+    -> creates migration file (in /data/migrations)
+
+//create seed file(s)
+//set up knexfile.js to route to seeds
+$  yarn knex seed:run
+
+
+//========IF RUNNING INTO ISSUES WITH CREATING TABLE:========
+
+- delete all .db3 files
+$ yarn knex migrate:rollback
+$ yarn knex migrate:latest
+
+** this will create new .db3 files
+
++ enpoints works
++ $yarn knex seed:run works
+
+//=======IF CHANGING THE TABLE AFTER I'VE RAN THE SERVER A FEW TIMES:======
+$ yarn knex migrate:rollback
+$ yarn knex migrate:latest
+$ yarn knex seed:run works
