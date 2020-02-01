@@ -24,3 +24,8 @@ $ yarn knex migrate:latest
 
 + enpoints works
 + $yarn knex seed:run works
+
+//=======IF CHANGING THE TABLE AFTER I'VE RAN THE SERVER A FEW TIMES:======
+$ yarn knex migrate:rollback
+$ yarn knex migrate:latest
+$ yarn knex seed:run works
